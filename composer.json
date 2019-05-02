@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Emanuti\\Granatum\\": "packages/emanuti/granatum/src"
+            "Emanuti\\Granatum\\": "src/"
             
         }
     }
