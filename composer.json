@@ -1,0 +1,20 @@
+{
+    "name": "emanuti/granatum",
+    "description": "Pacote para manusear api do Granatum",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Emmanuel de C. Garcia",
+            "email": "emanu.ti@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Emanuti\\Granatum\\": "packages/emanuti/granatum/src"
+            
+        }
+    }
+}
