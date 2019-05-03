@@ -1,6 +1,6 @@
 {
     "name": "emanuti/granatum",
-    "description": "Pacote para manusear api do Granatum",
+    "description": "Pacote Laravel para manusear api do Granatum",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,7 +17,6 @@
     "autoload": {
         "psr-4": {
             "Emanuti\\Granatum\\": "src/"
-            
         }
     }
 }
