@@ -12,11 +12,15 @@ $ composer require emanuti/granatum
 Open config/app.php
 
 Add
+``` php
 Emanuti\Granatum\GranatumServiceProvider::class,
+```
 inside providers key of array
 
 Add
+``` php
 'Granatum' => Emanuti\Granatum\Facade::class
+```
 inside aliases key of array
 
 Run 
@@ -33,6 +37,8 @@ env will determine the enviroment that you are
 token dev will be used to test and prod, you know :-)
 
 ## Usage
+
+Available routes: https://www.granatum.com.br/financeiro/api/
 
 To get a collection related with route
 
@@ -64,8 +70,9 @@ To edit one item
 
 where fields will be an array and id will be an integer
 
+To delete one item
 ``` php
-\Granatum::put('any_route_available', id);
+\Granatum::delete('any_route_available', id);
 ```
 
 ## License
