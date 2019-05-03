@@ -14,7 +14,7 @@ class GranatumServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/src/config/granatum.php' => config_path('granatum.php'),
+            __DIR__.'/config/granatum.php' => config_path('granatum.php'),
         ]);
     }
 
