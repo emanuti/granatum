@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://laravel.com" target="_blank"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></a>
+<!--  <a href="https://www.granatum.com.br/financeiro/api/" target="_blank"><span style="background-color:#00579B;"><img src="https://www.granatum.com.br/financeiro/img/logo-granatum-financeiro.png"></span></a>-->
+</p>
 # Granatum
 Laravel Package to access Granatum API
 
