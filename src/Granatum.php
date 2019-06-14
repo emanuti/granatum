@@ -198,28 +198,28 @@ class Granatum
      */
     private function deepSearch($collection, $property, $value_property)
     {
-        $that = $this;
-        $resultCollection = collect();
-        
-        $collection->each(function($item, $key) use($that, $resultCollection, $property, $value_property) {
-            if($intersected = array_intersect_key( get_object_vars($item), array_flip(self::CHILDREN_KEYS) ) ) {
-                $intersectedKey = key($intersected);
-                if(count($item->$intersectedKey)) {
-                    $result = $that->deepSearch(collect($item->$intersectedKey), $property, $value_property);
-                    if($result->isNotEmpty()) {
-                        $resultCollection->push($result);
-                        return false;
-                    }
-                }
-            }
-            
+        $result = collect([]);
+
+        $collection->each(function($item, $key) use($property, $value_property, $result) {
             if(is_numeric(mb_stripos($item->$property, $value_property))) {
-                $resultCollection->push($item);
+                
+                $result = $result->push($item);
                 return false;
+            } else {
+                if($childrens = array_intersect_key( get_object_vars($item), array_flip(self::CHILDREN_KEYS) ) ) {
+                    $childrens = current($childrens);
+                    if(count($childrens)) {
+                        $deepSearch = $this->deepSearch(collect($childrens), $property, $value_property);
+                        if($deepSearch->isNotEmpty()) {
+                            $result = $result->push($deepSearch->first());
+                            return false;
+                        }
+                    }
+                } 
             }
         });
         
-        return $resultCollection;
+        return $result;
     }
 
     /**
