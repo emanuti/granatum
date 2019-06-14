@@ -13,6 +13,11 @@ class Granatum
      * Required at all POST and PUT requests
      */
     const POST_PUT_HEADER = ['Content-Type: application/x-www-form-urlencoded'];
+    const CHILDREN_KEYS   = [
+        'categorias_filhas',
+        'centros_custo_lucro_filhos',
+        'itens',
+    ];
 
     private $routes = [
         // 'lancamentos', // needed conta_id
@@ -33,12 +38,6 @@ class Granatum
         'cidades',
         'estados',
         'bancos',
-    ];
-
-    private $children_keys = [
-        'categorias_filhas',
-        'centros_custo_lucro_filhos',
-        'itens',
     ];
 
     private $env = '';
@@ -177,16 +176,50 @@ class Granatum
      */
     public function filter(string $route, string $property, string $value_property, bool $firstResult = true)
     {
+        $that = $this;
         $collection = $this->get($route);
 
-        $collection = $collection->filter(function($value) use($property, $value_property){
-            return mb_stripos($value->$property, $value_property) != false;
-        });
-
+        $collection = $this->deepSearch($collection, $property, $value_property);
+        
         if($firstResult) {
             return $collection->first();
         }
         return $collection;
+    }
+
+    /**
+     * Search for property/value pair at all level of collection 
+     * 
+     * @param Collection $collection
+     * @param string $property
+     * @param string $value_property
+     * 
+     * @return Collection
+     */
+    private function deepSearch($collection, $property, $value_property)
+    {
+        $that = $this;
+        $resultCollection = collect();
+        
+        $collection->each(function($item, $key) use($that, $resultCollection, $property, $value_property) {
+            if($intersected = array_intersect_key( get_object_vars($item), array_flip(self::CHILDREN_KEYS) ) ) {
+                $intersectedKey = key($intersected);
+                if(count($item->$intersectedKey)) {
+                    $result = $that->deepSearch(collect($item->$intersectedKey), $property, $value_property);
+                    if($result->isNotEmpty()) {
+                        $resultCollection->push($result);
+                        return false;
+                    }
+                }
+            }
+            
+            if(is_numeric(mb_stripos($item->$property, $value_property))) {
+                $resultCollection->push($item);
+                return false;
+            }
+        });
+        
+        return $resultCollection;
     }
 
     /**
