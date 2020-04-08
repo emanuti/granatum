@@ -5,6 +5,10 @@
 # Granatum
 Laravel Package to access Granatum API
 
+## Requirements
+
+curl extension
+
 ## Install
 
 Via composer
