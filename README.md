@@ -73,7 +73,7 @@ where fields will be an array
 To edit one item
 
 ``` php
-\Granatum::put('any_route_available', fiedls, id);
+\Granatum::put('any_route_available', id, fiedls);
 ```
 
 where fields will be an array and id will be an integer
